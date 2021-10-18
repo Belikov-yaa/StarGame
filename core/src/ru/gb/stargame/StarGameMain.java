@@ -13,14 +13,14 @@ public class StarGameMain extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		img2 = new Texture("mytexture.png");
+		img2 = new Texture("space-bg.png");
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
-		batch.draw(img2, 0, 0);
+		batch.draw(img2, 0, 0, 800, 600);
 		batch.draw(img, 0, 0);
 		batch.end();
 	}
@@ -29,5 +29,6 @@ public class StarGameMain extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+		img2.dispose();
 	}
 }
