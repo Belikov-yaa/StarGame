@@ -26,6 +26,21 @@ public class MenuScreen extends BaseScreen {
         batch.begin();
         batch.draw(img, imgPosition.x, imgPosition.y);
         batch.end();
+        if (!imgPosition.epsilonEquals(destination)) {
+            if (destination.cpy().sub(imgPosition).len() < imgVelocity.len()) {
+                imgPosition.set(destination);
+            } else {
+                imgPosition.add(imgVelocity);
+            }
+        }
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        destination.set(screenX, Gdx.graphics.getHeight() - screenY);
+        imgVelocity = destination.cpy().sub(imgPosition);
+        imgVelocity.nor().scl(3);
+        return super.touchDown(screenX, screenY, pointer, button);
     }
 
     @Override
