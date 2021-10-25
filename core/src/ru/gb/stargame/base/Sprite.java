@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import ru.gb.stargame.math.Rect;
 
 public class Sprite extends Rect {
-    protected float angel;
+    protected float angle;
     protected float scale = 1f;
     protected TextureRegion[] regions;
     protected int frame;
@@ -26,7 +26,7 @@ public class Sprite extends Rect {
         setWidth(height * aspect);
     }
 
-    public void resize(Rect wordBounds) {
+    public void resize(Rect worldBounds) {
 
     }
 
@@ -41,16 +41,16 @@ public class Sprite extends Rect {
                 halfWidth, halfHeight,
                 getWidth(), getHeight(),
                 scale, scale,
-                angel
+                angle
         );
     }
 
-    public float getAngel() {
-        return angel;
+    public float getAngle() {
+        return angle;
     }
 
-    public void setAngel(float angel) {
-        this.angel = angel;
+    public void setAngle(float angle) {
+        this.angle = angle;
     }
 
     public float getScale() {

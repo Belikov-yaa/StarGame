@@ -50,12 +50,17 @@ public class BaseScreen implements Screen, InputProcessor {
         screenBounds.setLeft(0);
         screenBounds.setBottom(0);
 
-        float aspect = width / (float) height;
         worldBounds.setHeight(1f);
-        worldBounds.setWidth(1f * aspect);
+        worldBounds.setWidth(width / (float) height);
         MatrixUtils.calcTransitionMatrix(screenToWorld, screenBounds, worldBounds);
         MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBounds);
         batch.setProjectionMatrix(worldToGl);
+        resize(worldBounds);
+    }
+
+    public void resize(Rect worldBounds) {
+        System.out.println("resize worldBounds.width = "
+                + worldBounds.getWidth() + " worldBounds.height = " + worldBounds.getHeight());
     }
 
     @Override
