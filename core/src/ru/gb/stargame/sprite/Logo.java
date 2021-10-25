@@ -12,7 +12,7 @@ public class Logo extends Sprite {
 
     private Vector2 dest;
     private Vector2 velosity;
-    private final float V_LEN = 0.05f; //
+    private final float V_LEN = 0.02f; //
 
     public Logo(Texture texture) {
         super(new TextureRegion(texture));

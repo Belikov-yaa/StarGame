@@ -35,17 +35,25 @@ public class MenuScreen extends BaseScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        logo.update(delta);
+        update(delta);
+        draw();
+    }
+
+    private void draw() {
         batch.begin();
         background.draw(batch);
         logo.draw(batch);
         batch.end();
     }
 
+    private void update(float delta) {
+        logo.update(delta);
+    }
+
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
         logo.touchDown(touch, pointer, button);
-        return super.touchDown(touch, pointer, button);
+        return false;
     }
 
     @Override
