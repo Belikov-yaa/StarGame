@@ -12,44 +12,48 @@ public class MenuScreen extends BaseScreen {
 
     private Texture img;
     private Texture bg;
-    private Vector2 position;
 
     private Background background;
+    private Logo logo;
 
     @Override
     public void show() {
         super.show();
         img = new Texture("badlogic.jpg");
-
-        position = new Vector2();
-
         bg = new Texture("textures/bg.png");
         background = new Background(bg);
-
+        logo = new Logo(img);
     }
 
     @Override
     public void resize(Rect worldBounds) {
         super.resize(worldBounds);
         background.resize(worldBounds);
+        logo.resize(worldBounds);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
+        update(delta);
+        draw();
+    }
 
+    private void draw() {
         batch.begin();
         background.draw(batch);
-
-        batch.draw(img, position.x, position.y, 0.5f, 0.5f);
+        logo.draw(batch);
         batch.end();
+    }
 
+    private void update(float delta) {
+        logo.update(delta);
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
-        position.set(touch);
-        return super.touchDown(touch, pointer, button);
+        logo.touchDown(touch, pointer, button);
+        return false;
     }
 
     @Override
