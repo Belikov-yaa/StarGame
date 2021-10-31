@@ -8,10 +8,16 @@ import ru.gb.stargame.math.Rect;
 import ru.gb.stargame.util.Regions;
 
 public class Sprite extends Rect {
+
     protected float angle;
     protected float scale = 1f;
     protected TextureRegion[] regions;
     protected int frame;
+    private boolean destroyed;
+
+    public Sprite() {
+
+    }
 
     public Sprite(TextureRegion region) {
         if (region == null) {
@@ -21,7 +27,7 @@ public class Sprite extends Rect {
         regions[0] = region;
     }
 
-    public Sprite(TextureRegion region, int rows, int cols, int frames) {
+    public Sprite (TextureRegion region, int rows, int cols, int frames) {
         this.regions = Regions.split(region, rows, cols, frames);
     }
 
@@ -50,6 +56,19 @@ public class Sprite extends Rect {
         );
     }
 
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+        return false;
+    }
+
+    public boolean touchUp(Vector2 touch, int pointer, int button) {
+        return false;
+    }
+
+    public boolean touchDragged(Vector2 touch, int pointer) {
+        return false;
+    }
+
+
     public float getAngle() {
         return angle;
     }
@@ -66,15 +85,15 @@ public class Sprite extends Rect {
         this.scale = scale;
     }
 
-    public boolean touchDown(Vector2 touch, int pointer, int button) {
-        return false;
+    public void destroy() {
+        destroyed = true;
     }
 
-    public boolean touchUp(Vector2 touch, int pointer, int button) {
-        return false;
+    public void flushDestroy() {
+        destroyed = false;
     }
 
-    public boolean touchDragged(Vector2 touch, int pointer) {
-        return false;
+    public boolean isDestroyed() {
+        return destroyed;
     }
 }
