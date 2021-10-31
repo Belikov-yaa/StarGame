@@ -1,6 +1,7 @@
 package ru.gb.stargame.sprite;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -15,6 +16,7 @@ public class MainShip extends Sprite {
     private static final float HEIGHT = 0.15f;
     private static final float BOTTOM_MARGIN = 0.05f;
     private static final int INVALID_POINTER = -1;
+    private static final float RELOAD_INTERVAL = 0.25f;
 
     private final Vector2 v;
     private final Vector2 v0;
@@ -25,15 +27,18 @@ public class MainShip extends Sprite {
     private final Vector2 bulletV;
     private final float bulletHeight;
     private final int damage;
+    private float reloadTimer;
 
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
 
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
+    private Sound bulletSound;
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, Sound bulletSound) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
+        this.bulletSound = bulletSound;
         this.v = new Vector2();
         this.v0 = new Vector2(0.5f, 0);
         this.bulletPool = bulletPool;
@@ -54,6 +59,11 @@ public class MainShip extends Sprite {
     @Override
     public void update(float delta) {
         pos.mulAdd(v, delta);
+        reloadTimer += delta;
+        if (reloadTimer >= RELOAD_INTERVAL) {
+            reloadTimer = 0f;
+            shoot();
+        }
         if (getRight() > worldBounds.getRight()) {
             setRight(worldBounds.getRight());
             stopMove();
@@ -158,5 +168,6 @@ public class MainShip extends Sprite {
     private void shoot() {
         Bullet bullet = bulletPool.obtain();
         bullet.set(this, bulletRegion, this.pos, bulletV, worldBounds, bulletHeight, damage);
+        bulletSound.play();
     }
 }
