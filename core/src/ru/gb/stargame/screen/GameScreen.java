@@ -39,10 +39,7 @@ public class GameScreen extends BaseScreen {
     public void show() {
         super.show();
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
-        music.setVolume(0.2f);
-        music.setLooping(true);
-        music.play();
+        setMusicParam("sounds/music.mp3");
 
         laserSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
         bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
@@ -60,6 +57,13 @@ public class GameScreen extends BaseScreen {
         mainShip = new MainShip(atlas, bulletPool, laserSound);
 
         enemyEmitter = new EnemyEmitter(enemyPool, worldBounds, atlas);
+    }
+
+    private void setMusicParam(String fileName) {
+        music = Gdx.audio.newMusic(Gdx.files.internal(fileName));
+        music.setVolume(0.2f);
+        music.setLooping(true);
+        music.play();
     }
 
     @Override

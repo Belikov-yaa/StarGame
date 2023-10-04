@@ -23,7 +23,7 @@ public class EnemyShip extends Ship {
     @Override
     public void update(float delta) {
         super.update(delta);
-        if (getBottom() < worldBounds.getBottom()) {
+        if (getTop() < worldBounds.getBottom()) {
             destroy();
         }
     }

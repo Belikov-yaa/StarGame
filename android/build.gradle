@@ -1,6 +1,6 @@
 android {
     buildToolsVersion "29.0.3"
-    compileSdkVersion 30
+    compileSdkVersion 32
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -19,7 +19,7 @@ android {
     defaultConfig {
         applicationId "ru.gb.stargame"
         minSdkVersion 14
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
     }
