@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import ru.gb.stargame.base.Ship;
 import ru.gb.stargame.math.Rect;
 import ru.gb.stargame.pool.BulletPool;
+import ru.gb.stargame.pool.ExplosionPool;
 
 public class MainShip extends Ship {
 
@@ -24,19 +25,20 @@ public class MainShip extends Ship {
     private int rightPointer = INVALID_POINTER;
 
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool, Sound bulletSound) {
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool, Sound bulletSound) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
         this.bulletSound = bulletSound;
         this.v = new Vector2();
         this.v0 = new Vector2(0.5f, 0);
         this.bulletPool = bulletPool;
+        this.explosionPool = explosionPool;
         this.bulletRegion = new TextureRegion(atlas.findRegion("bulletMainShip"));
         this.bulletV = new Vector2(0, 0.5f);
         this.bulletHeight = 0.01f;
         this.bulletPos = new Vector2();
         this.damage = 1;
         this.reloadInterval = RELOAD_INTERVAL;
-        this.hp = 100;
+        this.hp = 10;
         this.gunPosition = new Vector2(0f, halfHeight*0.9f);
     }
 

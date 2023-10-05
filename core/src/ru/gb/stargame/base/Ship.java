@@ -6,12 +6,15 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.gb.stargame.math.Rect;
 import ru.gb.stargame.pool.BulletPool;
+import ru.gb.stargame.pool.ExplosionPool;
 import ru.gb.stargame.sprite.Bullet;
+import ru.gb.stargame.sprite.Explosion;
 
 public class Ship extends Sprite {
 
     private static final float DAMAGE_ANIMATE_INTERVAL = 0.1f;
 
+    protected ExplosionPool explosionPool;
     protected BulletPool bulletPool;
     protected TextureRegion bulletRegion;
     protected Vector2 bulletV;
@@ -56,6 +59,22 @@ public class Ship extends Sprite {
 
     public int getDamage() {
         return damage;
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        if (!(getTop() < worldBounds.getBottom()
+                || getBottom() > worldBounds.getTop()
+                || getRight() < worldBounds.getLeft()
+                || getLeft() > worldBounds.getRight())) {
+            explode();
+        }
+    }
+
+    private void explode() {
+        Explosion explosion = explosionPool.obtain();
+        explosion.set(this.pos, getHeight());
     }
 
     @Override
