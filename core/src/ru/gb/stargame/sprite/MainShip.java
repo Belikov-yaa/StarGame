@@ -37,6 +37,7 @@ public class MainShip extends Ship {
         this.damage = 1;
         this.reloadInterval = RELOAD_INTERVAL;
         this.hp = 100;
+        this.gunPosition = new Vector2(0f, halfHeight*0.9f);
     }
 
     @Override
@@ -50,7 +51,6 @@ public class MainShip extends Ship {
     @Override
     public void update(float delta) {
         super.update(delta);
-        bulletPos.set(this.pos.x, getTop());
         if (getRight() > worldBounds.getRight()) {
             setRight(worldBounds.getRight());
             stopMove();
@@ -149,4 +149,10 @@ public class MainShip extends Ship {
         v.setZero();
     }
 
+    public boolean isBulletCollision(Bullet bullet) {
+        return !(bullet.getRight() < getLeft()
+                || bullet.getLeft() > getRight()
+                || bullet.getTop() < getBottom()
+                || bullet.getBottom() > pos.y + halfHeight / 2);
+    }
 }

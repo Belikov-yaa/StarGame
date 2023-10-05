@@ -14,6 +14,7 @@ import ru.gb.stargame.math.Rect;
 import ru.gb.stargame.pool.BulletPool;
 import ru.gb.stargame.pool.EnemyPool;
 import ru.gb.stargame.sprite.Background;
+import ru.gb.stargame.sprite.Bullet;
 import ru.gb.stargame.sprite.EnemyShip;
 import ru.gb.stargame.sprite.MainShip;
 import ru.gb.stargame.sprite.Star;
@@ -106,6 +107,24 @@ public class GameScreen extends BaseScreen {
             if (!enemyShip.isDestroyed() &&
                     enemyShip.pos.dst(mainShip.pos) < (mainShip.getHalfWidth() + enemyShip.getHalfWidth())) {
                 enemyShip.destroy();
+            }
+        }
+        List<Bullet> bullets = bulletPool.getActiveObjects();
+        for (Bullet bullet : bullets) {
+            if (bullet.isDestroyed()) continue;
+            if (bullet.getOwner() != mainShip) {
+                if (mainShip.isBulletCollision(bullet)) {
+                    mainShip.doDamage(bullet.getDamage());
+                    bullet.destroy();
+                }
+                continue;
+            }
+            for (EnemyShip enemyShip : enemyShips) {
+                if (enemyShip.isBulletCollision(bullet)) {
+                    enemyShip.doDamage(bullet.getDamage());
+                    bullet.destroy();
+                }
+
             }
         }
     }
