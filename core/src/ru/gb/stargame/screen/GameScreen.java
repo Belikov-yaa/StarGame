@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.List;
+
 import ru.gb.stargame.base.BaseScreen;
 import ru.gb.stargame.math.Rect;
 import ru.gb.stargame.pool.BulletPool;
 import ru.gb.stargame.pool.EnemyPool;
 import ru.gb.stargame.sprite.Background;
+import ru.gb.stargame.sprite.EnemyShip;
 import ru.gb.stargame.sprite.MainShip;
 import ru.gb.stargame.sprite.Star;
 import ru.gb.stargame.util.EnemyEmitter;
@@ -70,6 +73,7 @@ public class GameScreen extends BaseScreen {
     public void render(float delta) {
         super.render(delta);
         update(delta);
+        checkCollisions();
         freeAllDestroyed();
         draw();
     }
@@ -94,6 +98,16 @@ public class GameScreen extends BaseScreen {
         enemyPool.drawActiveObjects(batch);
         mainShip.draw(batch);
         batch.end();
+    }
+
+    private void checkCollisions() {
+        List<EnemyShip> enemyShips = enemyPool.getActiveObjects();
+        for (EnemyShip enemyShip : enemyShips) {
+            if (!enemyShip.isDestroyed() &&
+                    enemyShip.pos.dst(mainShip.pos) < (mainShip.getHalfWidth() + enemyShip.getHalfWidth())) {
+                enemyShip.destroy();
+            }
+        }
     }
 
     private void freeAllDestroyed() {
