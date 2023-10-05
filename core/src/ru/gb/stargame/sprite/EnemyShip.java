@@ -7,11 +7,13 @@ import com.badlogic.gdx.math.Vector2;
 import ru.gb.stargame.base.Ship;
 import ru.gb.stargame.math.Rect;
 import ru.gb.stargame.pool.BulletPool;
+import ru.gb.stargame.pool.ExplosionPool;
 
 public class EnemyShip extends Ship {
 
-    public EnemyShip(BulletPool bulletPool, Rect worldBounds, Sound bulletSound) {
+    public EnemyShip(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, Sound bulletSound) {
         this.bulletPool = bulletPool;
+        this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
         this.bulletSound = bulletSound;
         this.bulletV = new Vector2();
@@ -23,7 +25,7 @@ public class EnemyShip extends Ship {
     @Override
     public void update(float delta) {
         super.update(delta);
-        bulletPos.set(this.pos.x, getBottom());
+//        bulletPos.set(this.pos.x, getBottom());
         if (getTop() < worldBounds.getTop()) {
             v.set(v0);
         } else {
@@ -55,5 +57,13 @@ public class EnemyShip extends Ship {
         this.reloadInterval = reloadInterval;
         setHeightProportion(height);
         this.v.set(0f, -0.5f);
+        this.gunPosition = new Vector2(0f, -halfHeight*0.9f);
+    }
+
+    public boolean isBulletCollision(Bullet bullet) {
+        return !(bullet.getRight() < getLeft()
+                || bullet.getLeft() > getRight()
+                || bullet.getTop() < pos.y
+                || bullet.getBottom() > getTop());
     }
 }
